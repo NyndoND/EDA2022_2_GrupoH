@@ -3,18 +3,18 @@
 #include <locale.h>
 #include <string.h>
 
+//Definindo o Produto
 typedef struct
 {
-  char category[100];
+  char category[30];
   float amount;
 } Produto;
 
 int main()
 {
   FILE *fp;
-  Produto aux;
-  Produto *p;
-  fp = fopen("amazonDataset.csv", "r");
+  Produto *p, aux, teste;
+  fp = fopen("amazonTest.csv", "r");
 
   if (fp == NULL)
   {
@@ -25,19 +25,35 @@ int main()
     printf("Arquivo aberto com sucesso!\n");
   }
 
-  // Alocação dinâmica    --> resolver problema da alocação dinâmica
-  int tam = 128975; // int tam = tamanhoArquivo(fp);  -> função tamanhoArquivo está com problema
-  p = (Produto *)malloc(tam * sizeof(Produto));
+  // Alocando o tamanho de 1 produto
+  p = (Produto *)malloc(1 * sizeof(Produto));
 
   // criando outro arquivo para formatar e manipular o dataSet
   FILE *fpCopia;
   fpCopia = fopen("amazonDatasetCopia.csv", "w");
+  int i = 0;
 
-  for (int i = 0; i < tam; i++)
-    fscanf(fp, "%s %f", p[i].category, &p[i].amount);
+  while(fscanf(fp, "%s %f", teste.category, &teste.amount) != EOF){
+    p = (Produto*) realloc(p, (i+1) * sizeof(Produto));
+    p[i].amount = teste.amount;
+    strcpy(p[i].category,teste.category);
+    i++;
+  };
+
+  // do {
+  //   //p = (Produto*) realloc(p, (i+2) * sizeof(Produto));
+  //   if(i > 100){
+  //     fscanf(fp, "%s %f", teste[i].category, &teste[i].amount);
+  //   } else {
+  //     fscanf(fp, "%s %f", p[i].category, &p[i].amount);
+  //   }
+  //   i++;
+  // }while(fscanf(fp, "%s %f", teste[i].category, &teste[i].amount) != EOF);
+ 
+  printf("aqui");
 
   // Ordenado os pecos bubble
-  for (int h = tam; h > 0; h--)
+  for (int h = i; h > 0; h--)
   {
     for (int j = 0; j < h; j++)
     {
@@ -55,11 +71,12 @@ int main()
     }
   }
 
-  for (int l = 0; l < tam; l++)
+  for (int l = 0; l < i; l++)
   {
     //Printado no arquivo de saida
-    fprintf(fpCopia, "\n%s %f", p[l].category, p[l].amount);
+    fprintf(fpCopia, "%s %f\n", p[l].category, p[l].amount);
   }
+  printf("\n %s %f\n", teste.category, teste.amount);
   fclose(fpCopia);
 
   printf("Arquivo de saida gerado!\n"); // se o código executar até aqui, quer dizer que foi gerado um arquivo de saída
