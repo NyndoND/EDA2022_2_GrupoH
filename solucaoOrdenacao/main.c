@@ -47,7 +47,7 @@ int main()
   fpCopia = fopen("amazonDatasetCopia.csv", "w"); // Abrindo o outro arquivo para Saída
 
   int i = 0; // Contador para manipular a posição no Vetor
-  if (input == "s")
+  if (input[0] == 's')
   {
     while (fscanf(fp, "%s %f", aux.category, &aux.amount) != EOF)
     {
