@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
+#include <time.h>
 
 //Definindo o Produto
 typedef struct
@@ -12,9 +13,14 @@ typedef struct
 
 int main()
 {
-  FILE *fp;
-  Produto *p, aux, teste;
-  fp = fopen("amazonTest.csv", "r");
+  FILE *fp, *fpCopia;
+  Produto *p, aux;
+  clock_t start, end;
+  double cpu_time_used;
+
+  start = clock(); //Pegando o tempo de inicio do programa
+
+  fp = fopen("amazonDataset.csv", "r"); //Abrindo o arquivo para leitura seguido de verificação de erro
 
   if (fp == NULL)
   {
@@ -25,34 +31,20 @@ int main()
     printf("Arquivo aberto com sucesso!\n");
   }
 
-  // Alocando o tamanho de 1 produto
-  p = (Produto *)malloc(1 * sizeof(Produto));
+  p = (Produto *)malloc(1 * sizeof(Produto)); // Alocando o tamanho de 1 produto
 
-  // criando outro arquivo para formatar e manipular o dataSet
-  FILE *fpCopia;
-  fpCopia = fopen("amazonDatasetCopia.csv", "w");
-  int i = 0;
+  
+  fpCopia = fopen("amazonDatasetCopia.csv", "w"); // Abrindo o outro arquivo para Saída
 
-  while(fscanf(fp, "%s %f", teste.category, &teste.amount) != EOF){
+  int i = 0; // Contador para manipular a posição no Vetor
+  while(fscanf(fp, "%s %f", aux.category, &aux.amount) != EOF){
     p = (Produto*) realloc(p, (i+1) * sizeof(Produto));
-    p[i].amount = teste.amount;
-    strcpy(p[i].category,teste.category);
+    p[i].amount = aux.amount;
+    strcpy(p[i].category,aux.category);
     i++;
   };
 
-  // do {
-  //   //p = (Produto*) realloc(p, (i+2) * sizeof(Produto));
-  //   if(i > 100){
-  //     fscanf(fp, "%s %f", teste[i].category, &teste[i].amount);
-  //   } else {
-  //     fscanf(fp, "%s %f", p[i].category, &p[i].amount);
-  //   }
-  //   i++;
-  // }while(fscanf(fp, "%s %f", teste[i].category, &teste[i].amount) != EOF);
- 
-  printf("aqui");
-
-  // Ordenado os pecos bubble
+  // Ordenado os precos usando lógica BubbleSort
   for (int h = i; h > 0; h--)
   {
     for (int j = 0; j < h; j++)
@@ -71,19 +63,19 @@ int main()
     }
   }
 
+  //Escrevendo no arquivo de Saída
   for (int l = 0; l < i; l++)
   {
-    //Printado no arquivo de saida
     fprintf(fpCopia, "%s %f\n", p[l].category, p[l].amount);
   }
-  printf("\n %s %f\n", teste.category, teste.amount);
-  fclose(fpCopia);
-
   printf("Arquivo de saida gerado!\n"); // se o código executar até aqui, quer dizer que foi gerado um arquivo de saída
 
   free(p);
   fclose(fp);
+
+  end = clock(); //Pegando o tempo de fim do programa
+  cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+  fprintf(fpCopia, "O tempo de execução foi de: %f segundos\n", cpu_time_used); // Imprimindo na última linha o tempo de execução
   fclose(fpCopia);
-  // fclose(fpSaida);
   return 0;
 }
