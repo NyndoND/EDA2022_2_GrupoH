@@ -18,16 +18,16 @@ int main()
   clock_t start, end;
   double cpu_time_used;
 
-  char input[5];
+  char input[2];
   do
   { 
-    printf("Seu Dataset possui espaços entre as categorias? (s/n)\n");
+    printf("Seu Dataset possui espacos entre as categorias? (s/n)\n");
     scanf("%s", input);
-    if (input != "s" && input != "n")
+    if (input[0] != 'n' && input[0] != 's')
     {
       printf("Resposta invalida!\n");
     }
-  } while (input != "s" || input != "n");
+  } while (input[0] != 'n' && input[0] != 's');
 
   start = clock(); // Pegando o tempo de inicio do programa
 
