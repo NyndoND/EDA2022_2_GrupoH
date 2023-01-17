@@ -103,12 +103,19 @@ int main()
   }
   printf("Arquivo de saida gerado!\n"); // se o código executar até aqui, quer dizer que foi gerado um arquivo de saída
 
+  printf("A categoria com o maior valor: %s %f\n", p[0].category, p[0].amount);
+  printf("A categoria com o menor valor: %s %f\n", p[i-1].category, p[i-1].amount);
   free(p);
   fclose(fp);
 
   end = clock(); // Pegando o tempo de fim do programa
   cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
   fprintf(fpCopia, "O tempo de execução foi de: %f segundos\n", cpu_time_used); // Imprimindo na última linha o tempo de execução
+  fprintf(fpCopia, "O metodo utilizado foi de Bubble sort que possui complexidade O(n^2) \n"); // Imprimindo a complexidade do código 
+  
+  printf("O tempo de execucao foi de: %f segundos\n", cpu_time_used); // Imprimindo na última linha o tempo de execução
+  printf("O metodo utilizado foi de Bubble sort que possui complexidade O(n^2) \nSendo que para o melhor caso a complexidade diminui para O(n)");
+
   fclose(fpCopia);
   return 0;
 }

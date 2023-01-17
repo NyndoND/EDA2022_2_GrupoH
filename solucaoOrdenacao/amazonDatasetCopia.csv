@@ -98,4 +98,5 @@ kurta; 0.000000
 kurta; 0.000000
 kurta; 0.000000
 kurta; 0.000000
-O tempo de execução foi de: 0.001000 segundos
+O tempo de execução foi de: 0.006000 segundos
+O metodo utilizado foi de Bubble sort que possui complexidade O(n^2) 
