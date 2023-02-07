@@ -64,25 +64,50 @@ int main(int argc, char const *argv[]) {
     TABP *raiz;
     salary sAux;    // criando uma struct auxiliar, para pegar os valores do arquivo e jogar em um nó da árvore 
     
-    fp = fopen("dataset_salaries.csv", "r");
+    int escolha;
+    
+    do{
+    printf("Trabalho Pratico 2\n");
+    printf("1. Carregar arquivo de dados\n");
+    printf("2. Emitir Relatorio\n");
+    printf("3. Sair\n");
+    scanf("%d",&escolha);
+    system("cls || clear");
+        
+    switch(escolha){
+        case 1:
+            fp = fopen("dataset_salaries.csv", "r");
 
-    if (fp == NULL) {
-        printf("Erro na abertura do arquivo!\n");
-    } else {
-        printf("Arquivo aberto com sucesso!\n");
+            if (fp == NULL) {
+                printf("Erro na abertura do arquivo!\n");
+            } else {
+                printf("Arquivo aberto com sucesso!\n");
+            }
+
+            fscanf(fp, "%d %d", &sAux.linha, &sAux.salaryUsd);
+            raiz = create(sAux);    // inicializando a arvore e pegando os primeiros valores
+
+            while(fscanf(fp, "%d %d", &sAux.linha, &sAux.salaryUsd) != EOF) {   // pegando os valores do arquivo e jogando na arvore
+                adicionar(raiz, sAux);
+            }
+
+            TABP *raizAux = raiz;   // criando uma raiz auxiliar para mostrar os valores da arvore
+            imprime(raizAux);
+            break;
+            
+        case 2:
+            
+            break;
+            
+        case 3:
+            desalocar(raiz);    // desalocando os nós da árvore
+            break;
+            
+        default:
+            printf("Opcao invalida! Escolha entre as opcoes 1, 2 e 3.\n");
     }
-
-    fscanf(fp, "%d %d", &sAux.linha, &sAux.salaryUsd);
-    raiz = create(sAux);    // inicializando a arvore e pegando os primeiros valores
-
-    while(fscanf(fp, "%d %d", &sAux.linha, &sAux.salaryUsd) != EOF) {   // pegando os valores do arquivo e jogando na arvore
-        adicionar(raiz, sAux);
-    }
-
-    TABP *raizAux = raiz;   // criando uma raiz auxiliar para mostrar os valores da arvore
-    imprime(raizAux);
-
-    desalocar(raiz);    // desalocando os nós da árvore
-
+    
+    }while(escolha!=3);
+    
     return 0;
 }
