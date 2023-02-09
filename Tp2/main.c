@@ -47,35 +47,39 @@ void imprime(TABP *a) {
     }
 }
 
-
 void desalocar(TABP *a) {   // desaloca os nós no sentido crescente..
     if(a == NULL) {
         return;
-    } else {
+    } else if(a->esquerda == NULL && a->direita == NULL) {  // tratamento especial para evitar algumas recurssões
+        free(a);
+        a = NULL;
+    } else{
         desalocar(a->esquerda);
         desalocar(a->direita);
         free(a);
+        a = NULL;   // apontando o ponteiro pra NULL pra evitar que ele aponte pra algum lixo de memória
     }
 }
 
 int main(int argc, char const *argv[]) {
     
     FILE *fp; 
-    TABP *raiz;
+    TABP *raiz = NULL; // criando um ponteiro que vai apontar pra raiz...
     salary sAux;    // criando uma struct auxiliar, para pegar os valores do arquivo e jogar em um nó da árvore 
     
     int escolha;
     
     do{
-    printf("Trabalho Pratico 2\n");
-    printf("1. Carregar arquivo de dados\n");
-    printf("2. Emitir Relatorio\n");
-    printf("3. Sair\n");
-    scanf("%d",&escolha);
-    system("cls || clear");
+        printf("Trabalho Pratico 2\n");
+        printf("1. Carregar arquivo de dados\n");
+        printf("2. Emitir Relatorio\n");
+        printf("3. Sair\n");
+        scanf("%d",&escolha);
+        system("cls || clear");
         
     switch(escolha){
         case 1:
+
             fp = fopen("dataset_salaries.csv", "r");
 
             if (fp == NULL) {
@@ -93,21 +97,27 @@ int main(int argc, char const *argv[]) {
 
             TABP *raizAux = raiz;   // criando uma raiz auxiliar para mostrar os valores da arvore
             imprime(raizAux);
+
             break;
             
         case 2:
-            
+
+            // colocar o relatório aqui..
+
             break;
             
         case 3:
+
             desalocar(raiz);    // desalocando os nós da árvore
+            
             break;
             
         default:
+
             printf("Opcao invalida! Escolha entre as opcoes 1, 2 e 3.\n");
     }
     
-    }while(escolha!=3);
+    } while(escolha!=3);
     
     return 0;
 }
