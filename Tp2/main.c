@@ -101,6 +101,16 @@ int main(int argc, char const *argv[]) {
             break;
             
         case 2:
+          
+          if(raiz == NULL) {
+            printf("Arquivo vazio!\n");
+            } else {
+            // Raiz aux para manter a integridade do ponteiro caso a variável raiz seja utilizada novamente (Continuar no mesmo local)
+              raizAux = raiz;   
+            // criando uma raiz auxiliar para mostrar os valores da arvore
+                imprime(raizAux);
+              }
+            printf("\n");
 
             // colocar o relatório aqui..
 
